@@ -33,45 +33,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <link rel="stylesheet" href="assets/css/register.css">
 <div class="container">
-<h2>Form Register</h2>
-<form method="post" action="">
-    <div class="logo">
-        <img src="logo.png" alt="Logo">
-        <h1>PELOK USAHA</h1>
+    <div class="container">
+        <div class="left-panel">
+            <div class="logo">
+                <img src="images/logo2.png" alt="Logo">
+            </div>
+            <h2>Selamat Datang!</h2>
+            <p>Kalo anda sudah punya akun silahkan login pada akun anda</p>
+            <a href="login.php" class="btn">SIGN IN</a>
+        </div>
+
+        <div class="right-panel">
+            <h2>Buat Akun</h2>
+            <form method="post" action="">
+                <label>Username:</label>
+                <input type="text" name="username" required>
+
+                <label>Password:</label>
+                <input type="password" name="password" required>
+
+                <label>Role:</label>
+                <select name="role" id="role" onchange="toggleKodeAdmin()" required>
+                    <option value="">-- Pilih Role --</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select>
+
+                <div id="kodeAdminContainer" style="display: none;">
+                    <label>Kode Admin:</label>
+                    <input type="text" name="kode_admin" id="kode_admin">
+                </div>
+
+                <button type="submit">SIGN UP</button>
+            </form>
+        </div>
     </div>
-    <label>Username:</label><br>
-    <input type="text" name="username" required><br><br>
 
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br><br>
+    <script>
+        function toggleKodeAdmin() {
+            const role = document.getElementById('role').value;
+            const kodeAdminDiv = document.getElementById('kodeAdminContainer');
+            kodeAdminDiv.style.display = (role === 'admin') ? 'block' : 'none';
+        }
+    </script>
 
-    <label>Role:</label><br>
-    <select name="role" id="role" onchange="toggleKodeAdmin()" required>
-        <option value="">-- Pilih Role --</option>
-        <option value="admin">Admin</option>
-        <option value="user">User</option>
-    </select><br><br>
-
-    <div id="kodeAdminContainer" style="display: none;">
-        <label>Kode Admin:</label><br>
-        <input type="text" name="kode_admin" id="kode_admin"><br><br>
-    </div>
-
-    <button type="submit">Daftar</button>
-</form>
-
-<p>Sudah punya akun? <a href="login.php">Login di sini</a></p>
-
-<script>
-function toggleKodeAdmin() {
-    const role = document.getElementById('role').value;
-    const kodeAdminDiv = document.getElementById('kodeAdminContainer');
-
-    if (role === 'admin') {
-        kodeAdminDiv.style.display = 'block';
-    } else {
-        kodeAdminDiv.style.display = 'none';
-    }
-}
-</script>
 </div>

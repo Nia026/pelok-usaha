@@ -72,6 +72,7 @@ body {
   text-align: center;
   color: white;
   height: 40vh;
+  height: 50vh;
 }
 
 .hero h1 {
@@ -88,27 +89,31 @@ body {
 }
 
 /* Vision Section */
-section .vision {
-  padding: 40px 0;
-  background: url('/images/hero-bg.jpg') no-repeat center center/cover;
+.vision {
+  /* padding: 80px 0; */
+  background-image: url('../../images/hero-bg.jpg'); 
 }
 
 .vision .container{
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  height: 60vh;
+  width: 100%;
 }
 
 .vision h2 {
   text-align: center;
-  margin-bottom: 20px;
+  font-size: 40px;
+  color: white;
+
 }
 
 .vision ol {
-  padding-left: 20px;
-  max-width: 800px;
-  margin: auto;
+  padding: 40px;
+  color: black;
+  font-size: 16px;
 }
 
 .vision li {
@@ -124,6 +129,7 @@ section .vision {
 
 #search-form {
   margin-top: 20px;
+  padding: 10px;
 }
 
 #search-input {
@@ -166,7 +172,6 @@ section .vision {
   background-color: white;
   padding: 20px;
   overflow-y: auto;
-  /* height: 90vh; */
   border-right: 1px solid #ddd;
 }
 

@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <nav class="navbar">
     <img src="images/logo2.png" alt="Pelok Usaha Logo" class="logo">
     <div class="nav-links">
-      <a href="edit_profile_user.php" class="btn btn-secondary">Edit Profile</a>
+      <a href="edit_profile_user.php" class="btn btn-profile">Edit Profile</a>
       <a href="index.php" class="btn btn-secondary">Logout</a>
     </div>
   </nav>

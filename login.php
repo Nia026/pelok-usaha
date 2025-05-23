@@ -28,18 +28,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/login.css">
 <div class="container">
-    <h2>Login</h2>
-    <form method="post" action="">
-        <label>Username:</label><br>
-        <input type="text" name="username" required><br><br>
+  <div class="container">
+    <div class="left-panel">
+      <div class="logo">
+        <img src="images/logo3.png" alt="Logo">
+      </div>
+      <h2>Hello, Friend!</h2>
+      <p>Belum punya akun? Silahkan gabung disini</p>
+      <a href="register.php" class="btn">SIGN UP</a>
+    </div>
 
-        <label>Password:</label><br>
-        <input type="password" name="password" required><br><br>
+    <div class="right-panel">
+      <h2>Login Akun</h2>
+      <form method="post" action="">
+        <label>Username:</label>
+        <input type="text" name="username" required>
 
-        <button type="submit">Login</button>
-    </form>
+        <label>Password:</label>
+        <input type="password" name="password" required>
 
-    <p>Belum punya akun? <a href="register.php">Daftar di sini</a></p>
+        <button type="submit">LOGIN</button>
+      </form>
+    </div>
+  </div>
+
 </div>
