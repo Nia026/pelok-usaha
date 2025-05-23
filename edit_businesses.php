@@ -1,5 +1,11 @@
 <?php
+session_start();
 include 'config/database.php';
+
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'user') {
+  header("Location: login.php");
+  exit;
+}
 
 $id = $_GET['id'] ?? null;
 
@@ -17,7 +23,6 @@ if (!$data) {
   exit;
 }
 
-// Handle update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $name = $_POST['name'] ?? '';
   $category = $_POST['category'] ?? '';
@@ -31,38 +36,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $params = [];
   $types = "";
 
-  // Update nama
   if (!empty($name) && $name !== $data['name']) {
     $fields[] = "name = ?";
     $params[] = $name;
     $types .= "s";
   }
 
-  // Update kategori
   if (!empty($category) && $category !== $data['category']) {
     $fields[] = "category = ?";
     $params[] = $category;
     $types .= "s";
   }
 
-  // Update deskripsi
   if (!empty($description) && $description !== $data['description']) {
     $fields[] = "description = ?";
     $params[] = $description;
     $types .= "s";
   }
 
-  // Cek apakah alamat diisi dan berbeda
   $new_address = trim("$street, $zipcode, $city, $province");
   $old_address = trim($data['address']);
 
   if (!empty($street) && !empty($zipcode) && !empty($city) && !empty($province) && $new_address !== $old_address) {
-    // Geocoding alamat baru
     $url = "https://nominatim.openstreetmap.org/search?format=json&q=" . urlencode($new_address);
     $opts = ['http' => ['header' => "User-Agent: pelok-usaha/1.0"]];
     $context = stream_context_create($opts);
-    sleep(1); // rate limiting
-
+    sleep(1);
     $geoData = @file_get_contents($url, false, $context);
     $geo = json_decode($geoData, true);
 
@@ -82,11 +81,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $params[] = $longitude;
       $types .= "d";
     } else {
-      echo "<p style='color:red;'>Alamat tidak valid atau tidak ditemukan.</p>";
+      echo "<script>alert('Alamat tidak valid atau tidak ditemukan');</script>";
     }
   }
 
-  // Jika ada yang diupdate, jalankan query
   if (!empty($fields)) {
     $sql = "UPDATE businesses SET " . implode(", ", $fields) . " WHERE id_business = ?";
     $stmt = $koneksi->prepare($sql);
@@ -96,48 +94,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
     $stmt->close();
 
-    // Redirect ke dashboard_user.php
-    echo "<script>window.location.href = 'user_dashboard.php';</script>";
+    echo "<script>
+      alert('Data berhasil diperbarui!');
+      window.location.href = 'user_dashboard.php';
+    </script>";
     exit;
   }
 }
 ?>
 
-<!-- FORM HTML -->
 <!DOCTYPE html>
 <html>
 
 <head>
   <title>Edit Usaha</title>
+  <link rel="stylesheet" href="./assets/css/dashboard_user.css">
+  <link rel="stylesheet" href="./assets/css/add_businesses.css">
 </head>
 
 <body>
-  <h2>Edit Usaha</h2>
-  <form method="POST">
-    <label>Nama Usaha</label>
-    <input type="text" name="name" value="<?= htmlspecialchars($data['name']) ?>"><br>
+  <nav class="navbar">
+    <img src="images/logo2.png" alt="Pelok Usaha Logo" class="logo">
+    <div class="nav-links">
+      <a href="edit_profile_user.php" class="btn btn-secondary">Edit Profile</a>
+      <a href="index.php" class="btn btn-secondary">Logout</a>
+    </div>
+  </nav>
 
-    <label>Kategori</label>
-    <input type="text" name="category" value="<?= htmlspecialchars($data['category']) ?>"><br>
+  <div class="container">
+    <h2>Edit Usaha</h2>
+    <form method="POST">
+      <label>Nama Usaha</label>
+      <input type="text" name="name" value="<?= htmlspecialchars($data['name']) ?>" required>
 
-    <label>Deskripsi</label>
-    <textarea name="description"><?= htmlspecialchars($data['description']) ?></textarea><br>
+      <label>Kategori</label>
+      <input type="text" name="category" value="<?= htmlspecialchars($data['category']) ?>" required>
 
-    <label>Nama Jalan</label>
-    <input type="text" name="street" placeholder="Kosongkan jika tidak ingin ubah"><br>
+      <label>Deskripsi</label>
+      <textarea name="description" required><?= htmlspecialchars($data['description']) ?></textarea>
 
-    <label>Kode Pos</label>
-    <input type="text" name="zipcode" placeholder="Kosongkan jika tidak ingin ubah"><br>
+      <label>Nama Jalan</label>
+      <input type="text" name="street" placeholder="Kosongkan jika tidak ingin ubah">
 
-    <label>Kota</label>
-    <input type="text" name="city" placeholder="Kosongkan jika tidak ingin ubah"><br>
+      <label>Kode Pos</label>
+      <input type="text" name="zipcode" placeholder="Kosongkan jika tidak ingin ubah">
 
-    <label>Provinsi</label>
-    <input type="text" name="province" placeholder="Kosongkan jika tidak ingin ubah"><br><br>
+      <label>Kota</label>
+      <input type="text" name="city" placeholder="Kosongkan jika tidak ingin ubah">
 
-    <button type="submit" class="btn btn-success">Update Usaha</button>
-    <a href="user_dashboard.php" class="btn btn-danger">Kembali</a>
-  </form>
+      <label>Provinsi</label>
+      <input type="text" name="province" placeholder="Kosongkan jika tidak ingin ubah">
+
+      <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+      <a href="user_dashboard.php" class="btn btn-secondary">Kembali</a>
+    </form>
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 PelokUsaha. All rights reserved.</p>
+  </footer>
 </body>
 
 </html>

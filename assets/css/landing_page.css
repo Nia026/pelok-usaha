@@ -88,7 +88,7 @@ body {
 }
 
 /* Vision Section */
-.vision {
+section .vision {
   padding: 40px 0;
   background: url('/images/hero-bg.jpg') no-repeat center center/cover;
 }
@@ -156,6 +156,9 @@ body {
 .map-display .container{
   display: flex;
   flex-direction: row;
+  gap: 20px;
+  align-items: stretch;
+  height: 70vh;
 }
 
 .sidebar {
@@ -163,7 +166,7 @@ body {
   background-color: white;
   padding: 20px;
   overflow-y: auto;
-  max-height: 100vh;
+  /* height: 90vh; */
   border-right: 1px solid #ddd;
 }
 
@@ -179,7 +182,7 @@ body {
 
 #map {
   width: 90vh;
-  height: 70vh;
+  height: 100%;
 }
 
 /* Footer */

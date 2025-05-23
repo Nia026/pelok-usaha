@@ -26,39 +26,60 @@ $bisnisQuery = mysqli_query($koneksi, "SELECT * FROM businesses WHERE id_user = 
 </head>
 
 <body>
+    <nav class="navbar">
+        <img src="images/logo2.png" alt="Pelok Usaha Logo" class="logo">
+        <div class="nav-links">
+            <a href="edit_profile_user.php" class="btn btn-secondary">Edit Profile</a>
+            <a href="index.php" class="btn btn-secondary">Logout</a>
+        </div>
+    </nav>
+
     <div class="container">
         <div class="header">
-            <h2>Dashboard Pengguna</h2>
-            <p>Selamat datang, <strong><?= htmlspecialchars($_SESSION['username']) ?></strong>!</p>
+            <h2>Selamat datang, <strong><?= htmlspecialchars($_SESSION['username']) ?></strong>!</h2>
             <a href="add_businesses.php" class="btn btn-primary">+ Tambah Usaha</a>
-            <a href="index.php" class="btn btn-secondary">Logout</a>
         </div>
 
         <div id="map"></div>
 
-        <h3>Usaha Anda</h3>
-        <div class="card-list">
-            <?php while ($b = mysqli_fetch_assoc($bisnisQuery)): ?>
-                <div class="card">
-                    <h4><?= htmlspecialchars($b['name']) ?></h4>
-                    <p><strong>Kategori:</strong> <?= htmlspecialchars($b['category']) ?></p>
-                    <p><strong>Alamat:</strong> <?= htmlspecialchars($b['address']) ?></p>
-                    <p><strong>Koordinat:</strong> <?= $b['latitude'] ?>, <?= $b['longitude'] ?></p>
-                    <div class="btn-group">
-                        <form action="edit_businesses.php" method="GET">
-                            <input type="hidden" name="id" value="<?= $b['id_business'] ?>">
-                            <button class="btn btn-edit" type="submit">Edit</button>
-                        </form>
-
-                        <form action="delete.php" method="POST" onsubmit="return confirm('Yakin ingin menghapus bisnis ini?')">
-                            <input type="hidden" name="id" value="<?= $b['id_business'] ?>">
-                            <button class="btn btn-delete" type="submit">Hapus</button>
-                        </form>
-                    </div>
-                </div>
-            <?php endwhile; ?>
-        </div>
+        <h3>Daftar Usaha Anda</h3>
+        <table class="business-table">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Deskripsi</th>
+                    <th>Kategori</th>
+                    <th>Alamat</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($b = mysqli_fetch_assoc($bisnisQuery)): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($b['name']) ?></td>
+                        <td><?= htmlspecialchars($b['description']) ?></td>
+                        <td><?= htmlspecialchars($b['category']) ?></td>
+                        <td><?= htmlspecialchars($b['address']) ?></td>
+                        <td class="form-btn">
+                            <form action="edit_businesses.php" method="GET" style="display:inline;">
+                                <input type="hidden" name="id" value="<?= $b['id_business'] ?>">
+                                <button class="btn btn-edit" type="submit">Edit</button>
+                            </form>
+                            <form action="delete.php" method="POST" style="display:inline;"
+                                onsubmit="return confirm('Yakin ingin menghapus bisnis ini?')">
+                                <input type="hidden" name="id" value="<?= $b['id_business'] ?>">
+                                <button class="btn btn-delete" type="submit">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
     </div>
+
+    <footer>
+        <p>© <?= date("Y") ?> Pelok Usaha. All rights reserved.</p>
+    </footer>
 
     <script>
         var map = L.map('map').setView([-7.250445, 112.768845], 13);

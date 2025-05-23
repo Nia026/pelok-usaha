@@ -43,6 +43,11 @@ if (!empty($data)) {
 
   if ($insert) {
     header("Location: user_dashboard.php");
+    echo "
+      <script>
+        alert('Usaha berhasil ditambahkan!');
+      </script>
+    ";
     exit;
   } else {
     echo "Gagal menyimpan data: " . mysqli_error($koneksi);

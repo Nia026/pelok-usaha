@@ -8,12 +8,15 @@ if (!isset($_SESSION['username'])) {
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Dashboard</title>
 </head>
+
 <body>
     <h2>Selamat datang, <?php echo $_SESSION['username']; ?>!</h2>
     <p>Role: <?php echo $_SESSION['role']; ?></p>
     <a href="logout.php">Logout</a>
 </body>
+
 </html>

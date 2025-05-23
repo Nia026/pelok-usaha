@@ -30,16 +30,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <link rel="stylesheet" href="assets/css/style.css">
 <div class="container">
-<h2>Login</h2>
-<form method="post" action="">
-    <label>Username:</label><br>
-    <input type="text" name="username" required><br><br>
+    <h2>Login</h2>
+    <form method="post" action="">
+        <label>Username:</label><br>
+        <input type="text" name="username" required><br><br>
 
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br><br>
+        <label>Password:</label><br>
+        <input type="password" name="password" required><br><br>
 
-    <button type="submit">Login</button>
-</form>
+        <button type="submit">Login</button>
+    </form>
 
-<p>Belum punya akun? <a href="register.php">Daftar di sini</a></p>
+    <p>Belum punya akun? <a href="register.php">Daftar di sini</a></p>
 </div>
