@@ -34,6 +34,13 @@ $userCount = mysqli_fetch_assoc($userCountQuery)['total_users'] ?? 0;
               <td>${row.address}</td>
               <td>${row.category}</td>
               <td>${row.username}</td>
+              <td>
+                <form action="delete.php?redirect=admin_dashboard.php" method="POST" onsubmit="return       confirm('Yakin ingin menghapus bisnis ini?')">
+                    <input type="hidden" name="id" value="${row.id_business}">
+                    <button class="btn-delete" type="submit">Hapus</button>
+                </form>
+              </td>
+
             `;
                         tbody.appendChild(tr);
                     });
@@ -53,6 +60,7 @@ $userCount = mysqli_fetch_assoc($userCountQuery)['total_users'] ?? 0;
             <ul>
                 <li><a href="admin_dashboard.php">Dashboard</a></li>
                 <li><a href="edit_profile.php">Edit Profile</a></li>
+                <li><a href="bantuan.php">Bantuan</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </aside>
@@ -78,6 +86,7 @@ $userCount = mysqli_fetch_assoc($userCountQuery)['total_users'] ?? 0;
                                 <th>Alamat</th>
                                 <th>Kategori</th>
                                 <th>Ditambahkan oleh</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -92,6 +101,15 @@ $userCount = mysqli_fetch_assoc($userCountQuery)['total_users'] ?? 0;
                 <p>© 2025 PelokUsaha Admin Panel</p>
             </footer>
         </div>
+
+        <script>
+            function hapusUsaha(id) {
+                if (confirm("Apakah Anda yakin ingin menghapus usaha ini?")) {
+                    window.location.href = `delete.php?id=${id}&redirect=admin_dashboard.php`;
+                }
+            }
+        </script>
+
     </div>
 </body>
 

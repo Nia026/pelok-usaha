@@ -30,6 +30,7 @@ $bisnisQuery = mysqli_query($koneksi, "SELECT * FROM businesses WHERE id_user = 
         <img src="images/logo2.png" alt="Pelok Usaha Logo" class="logo">
         <div class="nav-links">
             <a href="edit_profile_user.php" class="btn btn-profile">Edit Profile</a>
+            <a href="bantuan.php" class="btn btn-bantuan">Bantuan</a>
             <a href="index.php" class="btn btn-secondary">Logout</a>
         </div>
     </nav>
